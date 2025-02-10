@@ -1,6 +1,10 @@
-package br.com.douglassouza.pedidos.api.entity;
+package br.com.douglassouza.pedidos.processador.domain.model;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,14 +14,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Entity
+@Table(name = "item_pedido")
 public class ItemPedido {
 
+    @Id
     private UUID id= UUID.randomUUID();
 
+    @ManyToOne
     private Produto produto;
 
     private Integer quantidade;
 
+    @ManyToOne
     private Pedido pedido;
 
 }

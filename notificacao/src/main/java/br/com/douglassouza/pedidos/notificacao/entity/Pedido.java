@@ -1,7 +1,7 @@
-package br.com.douglassouza.pedidos.api.entity;
+package br.com.douglassouza.pedidos.notificacao.entity;
 
 
-import br.com.douglassouza.pedidos.api.entity.enums.StatusEnum;
+import br.com.douglassouza.pedidos.notificacao.entity.enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,17 +18,11 @@ import java.util.UUID;
 public class Pedido {
 
     private UUID id= UUID.randomUUID();
-
     private String cliente;
-
-    private List<ItemPedido> itens = new ArrayList<>();
-
+    private List<ItemPedido> itens= new ArrayList<>();
     private Double valorTotal;
-
     private String emailNotificacao;
-
-    private StatusEnum status = StatusEnum.EM_PROCESSAMENTO;
-
+    private StatusEnum status= StatusEnum.EM_PROCESSAMENTO;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataHora = LocalDateTime.now();
 }
