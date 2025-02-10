@@ -1,4 +1,4 @@
-package br.com.douglassouza.pedidos.notificacao.configuration;
+package br.com.douglassouza.pedidos.processador.infrastructure.configuration;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -15,9 +15,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 public class RabbitMQConfig {
 
@@ -27,46 +24,19 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.queue.name}")
     private String queueName;
 
-    @Value("${rabbitmq.exchange.dlx.name}")
-    private String exchangeDlxName;
-
-    @Value("${rabbitmq.queue.dlq.name}")
-    private String queueDlqName;
-
-
-
 
     @Bean
     public FanoutExchange pedidosExchange(){
         return new FanoutExchange(exchangeName);
     }
-
     @Bean
-    public Queue notificacaoQueue(){
-        Map<String, Object> argumentos = new HashMap<String, Object>();
-        argumentos.put("x-dead-letter-exchange", exchangeDlxName);
-
-        return new Queue(queueName, true, false, false, argumentos);
-    }
-
-    @Bean
-    public FanoutExchange pedidosDlxExchange(){
-        return new FanoutExchange(exchangeDlxName);
-    }
-
-    @Bean
-    public Queue notificacaoDlqQueue(){
-        return new Queue(queueDlqName);
+    public Queue processadorQueue(){
+        return new Queue(queueName);
     }
 
     @Bean
     public Binding binding(){
-        return BindingBuilder.bind(notificacaoQueue()).to(pedidosExchange());
-    }
-
-    @Bean
-    public Binding bindingDlq(){
-        return BindingBuilder.bind(notificacaoDlqQueue()).to(pedidosDlxExchange());
+        return BindingBuilder.bind(processadorQueue()).to(pedidosExchange());
     }
 
     @Bean
