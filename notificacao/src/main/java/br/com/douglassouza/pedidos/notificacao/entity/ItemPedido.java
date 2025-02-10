@@ -1,4 +1,4 @@
-package br.com.douglassouza.pedidos.api.entity;
+package br.com.douglassouza.pedidos.notificacao.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -17,7 +17,5 @@ public class ItemPedido {
     private Produto produto;
 
     private Integer quantidade;
-
-    private Pedido pedido;
 
 }
